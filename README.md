@@ -2,7 +2,7 @@
 
 A proof of concept exploring how generative AI can augment Customer Success workflows in B2B SaaS, with two distinct deployment modes for SMB and Enterprise segments.
 
-**Live demo:** https://[your-username].github.io/cs-intelligence-hub-poc/
+**Live demo:** https://shiyunnchua-creator.github.io/cs-intelligence-hub-poc/
 
 ## What this project is
 
