@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS Intelligence Hub</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f5f5f3;color:#1a1a1a;padding:24px;min-height:100vh}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.dash{max-width:900px;margin:0 auto;background:#fff;border-radius:16px;padding:24px;border:1px solid #e0ddd6}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;gap:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:36px;height:36px;border-radius:9px;background:#1D9E75;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:13px;flex-shrink:0}
+.brand-name{font-size:15px;font-weight:600;color:#1a1a1a}
+.brand-sub{font-size:11px;color:#777}
+.seg-toggle{display:flex;background:#f0ede6;border-radius:9px;padding:3px;border:1px solid #ddd8cf;flex-shrink:0}
+.seg-btn{padding:6px 20px;border-radius:7px;border:none;background:transparent;cursor:pointer;font-size:13px;color:#666;transition:all .15s;font-family:inherit}
+.seg-btn.on{background:#fff;color:#1a1a1a;font-weight:600;border:1px solid #ccc8bf}
+.nav{display:flex;gap:2px;border-bottom:1px solid #e8e4dc;margin-bottom:1rem}
+.nb{padding:9px 16px;border:none;background:transparent;cursor:pointer;font-size:13px;color:#888;border-bottom:2px solid transparent;margin-bottom:-1px;display:flex;align-items:center;gap:5px;transition:all .15s;white-space:nowrap;font-family:inherit}
+.nb.on{color:#0F6E56;border-bottom-color:#0F6E56;font-weight:600}
+.nb i{font-size:15px}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:1rem}
+.mc{background:#f5f5f3;border-radius:9px;padding:12px 14px}
+.mc-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.mc-val{font-size:22px;font-weight:600;color:#1a1a1a;line-height:1.1}
+.mc-sub{font-size:11px;margin-top:3px;display:flex;align-items:center;gap:3px}
+.up{color:#0F6E56}.dn{color:#A32D2D}.neu{color:#888}.amb{color:#854F0B}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:13px;padding:1rem 1.25rem;margin-bottom:.75rem}
+.ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:6px}
+.ct{font-size:13px;font-weight:600;color:#1a1a1a;display:flex;align-items:center;gap:6px}
+.badge{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600}
+.b-red{background:#FCEBEB;color:#791F1F}
+.b-amb{background:#FAEEDA;color:#633806}
+.b-grn{background:#EAF3DE;color:#27500A}
+.b-blu{background:#E6F1FB;color:#0C447C}
+.b-tel{background:#E1F5EE;color:#085041}
+.b-gry{background:#f0ede6;color:#555}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem}
+@media(max-width:600px){.two{grid-template-columns:1fr}}
+.row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #f0ede6}
+.row:last-child{border-bottom:none}
+.rname{font-size:12px;font-weight:600;color:#1a1a1a}
+.rsub{font-size:11px;color:#777;margin-top:1px;line-height:1.35}
+.ab{padding:4px 11px;border:1px solid #d8d4cc;border-radius:7px;background:transparent;cursor:pointer;font-size:11px;color:#1a1a1a;white-space:nowrap;transition:background .15s;font-family:inherit}
+.ab:hover{background:#f5f5f3}
+.fc{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.chip{padding:4px 13px;border:1px solid #d8d4cc;border-radius:20px;font-size:11px;cursor:pointer;background:transparent;color:#777;transition:all .15s;font-family:inherit}
+.chip.on{background:#1D9E75;color:#fff;border-color:#1D9E75}
+.rcard{border:1px solid #e8e4dc;border-radius:9px;padding:11px 13px;margin-bottom:7px;cursor:pointer;transition:border-color .15s}
+.rcard:hover{border-color:#1D9E75}
+.rcard.crit{border-left:3px solid #E24B4A;border-top-left-radius:0;border-bottom-left-radius:0}
+.rcard.risk{border-left:3px solid #EF9F27;border-top-left-radius:0;border-bottom-left-radius:0}
+.rcard.ok{border-left:3px solid #639922;border-top-left-radius:0;border-bottom-left-radius:0}
+.rt{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;gap:8px}
+.rn{font-size:13px;font-weight:600;color:#1a1a1a}
+.rm{display:flex;flex-wrap:wrap;gap:10px;font-size:11px;color:#888}
+.rm span{display:flex;align-items:center;gap:3px}
+.sbar{width:48px;height:5px;border-radius:3px;background:#e8e4dc;display:inline-block;vertical-align:middle;overflow:hidden}
+.sfill{height:100%;border-radius:3px}
+.drawer{background:#f8f7f4;border-radius:8px;padding:11px 13px;margin-top:9px;display:none}
+.drawer.open{display:block}
+.dl{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px;margin-top:8px}
+.dl:first-child{margin-top:0}
+.dv{font-size:12px;color:#1a1a1a;font-weight:600}
+.aibox{background:#fff;border:1px solid #1D9E75;border-radius:8px;padding:10px 12px;margin-top:8px;font-size:12px;color:#1a1a1a;line-height:1.55}
+.ailbl{font-size:10px;font-weight:600;color:#0F6E56;margin-bottom:5px;display:flex;align-items:center;gap:4px}
+.dbts{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap}
+.htag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;font-size:10px;background:#E6F1FB;color:#0C447C;font-weight:600}
+.atag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;font-size:10px;background:#E1F5EE;color:#085041;font-weight:600}
+.scrd{border:1px solid #e8e4dc;border-radius:9px;padding:11px 13px;margin-bottom:7px}
+.sicon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+.tab{display:none}.tab.on{display:block}
+.chart-wrap{position:relative;width:100%;height:190px;margin-top:8px}
+.legend{display:flex;gap:16px;font-size:11px;color:#888;margin-bottom:4px;flex-wrap:wrap}
+.legend span{display:flex;align-items:center;gap:5px}
+.legend-sq{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+</style>
+</head>
+<body>
+<h2 class="sr-only">CS Intelligence Hub — renewal centre and upsell signals POC dashboard</h2>
+<div class="dash">
+
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">CS</div>
+    <div>
+      <div class="brand-name">CS Intelligence Hub</div>
+      <div class="brand-sub">Gemini &middot; Clay &middot; Salesforce &middot; Gong &middot; LinkedIn Sales Nav &nbsp;&mdash;&nbsp; POC</div>
+    </div>
+  </div>
+  <div class="seg-toggle">
+    <button class="seg-btn on" onclick="seg('ent',this)">ENT</button>
+    <button class="seg-btn" onclick="seg('smb',this)">SMB</button>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nb on" id="nb0" onclick="tab('home',0)"><i class="ti ti-layout-dashboard"></i>Overview</button>
+  <button class="nb" id="nb1" onclick="tab('renewal',1)"><i class="ti ti-refresh"></i>Renewal centre</button>
+  <button class="nb" id="nb2" onclick="tab('upsell',2)"><i class="ti ti-trending-up"></i>Upsell signals</button>
+</div>
+
+<!-- HOME TAB -->
+<div id="t-home" class="tab on">
+  <div id="ent-home-m" class="metrics">
+    <div class="mc"><div class="mc-label">Accounts</div><div class="mc-val">24</div><div class="mc-sub neu">Your portfolio</div></div>
+    <div class="mc"><div class="mc-label">Churn risk</div><div class="mc-val">4</div><div class="mc-sub dn"><i class="ti ti-alert-triangle"></i>Action needed</div></div>
+    <div class="mc"><div class="mc-label">Renewals (90d)</div><div class="mc-val">7</div><div class="mc-sub neu">Next 90 days</div></div>
+    <div class="mc"><div class="mc-label">Upsell signals</div><div class="mc-val">9</div><div class="mc-sub up"><i class="ti ti-sparkles"></i>AI detected</div></div>
+    <div class="mc"><div class="mc-label">Portfolio MRR</div><div class="mc-val">£2.4M</div><div class="mc-sub up">+6% MoM</div></div>
+  </div>
+  <div id="smb-home-m" class="metrics" style="display:none">
+    <div class="mc"><div class="mc-label">Active accounts</div><div class="mc-val">312</div><div class="mc-sub neu">Your portfolio</div></div>
+    <div class="mc"><div class="mc-label">Auto-actioned</div><div class="mc-val">47</div><div class="mc-sub up"><i class="ti ti-robot"></i>By AI agent</div></div>
+    <div class="mc"><div class="mc-label">Churn risk</div><div class="mc-val">28</div><div class="mc-sub dn">Needs review</div></div>
+    <div class="mc"><div class="mc-label">Renewals (month)</div><div class="mc-val">63</div><div class="mc-sub neu">£180k MRR</div></div>
+    <div class="mc"><div class="mc-label">AI upsell pipeline</div><div class="mc-val">£94k</div><div class="mc-sub up">Generated</div></div>
+  </div>
+  <div id="ent-home-body">
+    <div class="two">
+      <div class="card">
+        <div class="ch"><span class="ct"><i class="ti ti-alert-circle" style="color:#E24B4A"></i>Churn risk alerts</span><span class="badge b-red">4 flagged</span></div>
+        <div id="churn-rows"></div>
+        <div style="margin-top:9px;text-align:right"><button class="ab" onclick="tab('renewal',1)">View in renewal centre &nearr;</button></div>
+      </div>
+      <div class="card">
+        <div class="ch"><span class="ct"><i class="ti ti-sparkles" style="color:#1D9E75"></i>Top upsell opps</span><span class="badge b-tel">AI detected</span></div>
+        <div id="upsell-home-rows"></div>
+        <div style="margin-top:9px;text-align:right"><button class="ab" onclick="tab('upsell',2)">View all signals &nearr;</button></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ct">Renewal pipeline &mdash; MRR at risk by month</span><span class="badge b-gry">Next 90 days</span></div>
+      <div class="legend">
+        <span><span class="legend-sq" style="background:#1D9E75"></span>On track</span>
+        <span><span class="legend-sq" style="background:#EF9F27"></span>At risk</span>
+        <span><span class="legend-sq" style="background:#E24B4A"></span>Critical</span>
+      </div>
+      <div class="chart-wrap"><canvas id="pipeChart" role="img" aria-label="Stacked bar chart of renewal MRR. May £320k, June £580k, July £410k">Renewal MRR: May £320k, June £580k, July £410k.</canvas></div>
+    </div>
+  </div>
+  <div id="smb-home-body" style="display:none">
+    <div class="card">
+      <div class="ch"><span class="ct"><i class="ti ti-robot" style="color:#1D9E75"></i>Agent actions today <span class="atag"><i class="ti ti-bolt"></i>Autonomous</span></span><span class="badge b-tel">47 completed</span></div>
+      <div id="smb-action-rows"></div>
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ct">Escalations for your review</span><span class="badge b-amb">6 items</span></div>
+      <div id="smb-esc-rows"></div>
+    </div>
+  </div>
+</div>
+
+<!-- RENEWAL TAB -->
+<div id="t-renewal" class="tab">
+  <div id="ent-renewal-body">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+      <span style="font-size:12px;color:#777">AI-generated drafts for your review &mdash; you decide every action</span>
+      <span class="htag"><i class="ti ti-user-check"></i>Human in loop</span>
+    </div>
+    <div class="fc" id="rf">
+      <button class="chip on" onclick="rfilt('all',this)">All (7)</button>
+      <button class="chip" onclick="rfilt('crit',this)">Critical</button>
+      <button class="chip" onclick="rfilt('risk',this)">At risk</button>
+      <button class="chip" onclick="rfilt('ok',this)">On track</button>
+    </div>
+    <div id="renewal-cards"></div>
+  </div>
+  <div id="smb-renewal-body" style="display:none">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+      <span style="font-size:12px;color:#777">Agent auto-processes renewals &mdash; you review exceptions only</span>
+      <span class="atag"><i class="ti ti-robot"></i>Autonomous</span>
+    </div>
+    <div class="metrics" style="margin-bottom:.75rem">
+      <div class="mc"><div class="mc-label">Auto-processed</div><div class="mc-val">51</div><div class="mc-sub up">This month</div></div>
+      <div class="mc"><div class="mc-label">Exceptions</div><div class="mc-val">12</div><div class="mc-sub amb">Await review</div></div>
+      <div class="mc"><div class="mc-label">Time saved</div><div class="mc-val">38h</div><div class="mc-sub up">Est. this month</div></div>
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ct">Exceptions requiring your input</span><span class="badge b-amb">12 items</span></div>
+      <div id="smb-exc-rows"></div>
+    </div>
+  </div>
+</div>
+
+<!-- UPSELL TAB -->
+<div id="t-upsell" class="tab">
+  <div id="ent-upsell-body">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+      <span style="font-size:12px;color:#777">Weekly expansion briefing &mdash; recommendations only, you choose the action</span>
+      <span class="htag"><i class="ti ti-user-check"></i>Human in loop</span>
+    </div>
+    <div class="fc" id="sf">
+      <button class="chip on" onclick="sfilt('all',this)">All (9)</button>
+      <button class="chip" onclick="sfilt('headcount',this)">Headcount growth</button>
+      <button class="chip" onclick="sfilt('news',this)">Company news</button>
+      <button class="chip" onclick="sfilt('health',this)">Internal health</button>
+      <button class="chip" onclick="sfilt('stakeholder',this)">Stakeholder change</button>
+    </div>
+    <div id="signal-cards"></div>
+  </div>
+  <div id="smb-upsell-body" style="display:none">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+      <span style="font-size:12px;color:#777">Agent monitors signals and triggers outreach &mdash; high-value items escalated to you</span>
+      <span class="atag"><i class="ti ti-robot"></i>Autonomous</span>
+    </div>
+    <div class="metrics" style="margin-bottom:.75rem">
+      <div class="mc"><div class="mc-label">Signals this week</div><div class="mc-val">84</div><div class="mc-sub neu">Detected</div></div>
+      <div class="mc"><div class="mc-label">Auto outreach</div><div class="mc-val">31</div><div class="mc-sub up">Sent by agent</div></div>
+      <div class="mc"><div class="mc-label">Opp. pipeline</div><div class="mc-val">£94k</div><div class="mc-sub up">Created</div></div>
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ct">High-value signals for your attention</span><span class="badge b-tel">8 items</span></div>
+      <div id="smb-sig-rows"></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+var S='ent',RF='all',SF='all';
+var churnD=[
+  {n:'Barclays UK',mrr:'£42k',score:28,days:18,why:'Usage -41% · 2 missed QBRs'},
+  {n:'Vodafone Enterprise',mrr:'£31k',score:35,days:34,why:'Key champion left · Low engagement'},
+  {n:'BT Group',mrr:'£28k',score:41,days:22,why:'Subscriber base -18% last 60 days'},
+  {n:'Rolls-Royce',mrr:'£19k',score:44,days:45,why:'No exec sponsor · Renewal at risk'},
+];
+var upsellHomeD=[
+  {n:'HSBC',sig:'Hired 120 in Canary Wharf',val:'£18k'},
+  {n:'Deloitte UK',sig:'New wellbeing initiative announced',val:'£24k'},
+  {n:'Amazon UK',sig:'Glasgow office opening Q3',val:'£31k'},
+];
+var smbActD=[
+  {a:'Renewal proposals sent',c:18,ic:'ti-refresh'},
+  {a:'Churn risk alerts raised',c:11,ic:'ti-alert-triangle'},
+  {a:'Upsell outreach triggered',c:9,ic:'ti-trending-up'},
+  {a:'QBR decks generated',c:9,ic:'ti-presentation'},
+];
+var smbEscD=[
+  {n:'FitFlex Ltd',iss:'Disputed pricing on renewal',mrr:'£1.2k'},
+  {n:'TechStart Co',iss:'Client requested personal call',mrr:'£890'},
+  {n:'GreenPath HR',iss:'Contract amendment requested',mrr:'£2.1k'},
+  {n:'PulseWell',iss:'Health score 22 — exec escalation',mrr:'£1.8k'},
+  {n:'NovaRecruit',iss:'Upsell £4.2k — above auto-threshold',mrr:'£1.1k'},
+  {n:'ZenCorp',iss:'Multi-year renewal requires approval',mrr:'£3.4k'},
+];
+var renewD=[
+  {n:'HSBC',mrr:'£42k',days:12,st:'crit',subs:1840,h:32,note:'Renewal docs ready',ai:'Recommend 2-year lock-in at 5% discount. Champion Sarah Chen confirmed. Suggest exec dinner before close.'},
+  {n:'Unilever',mrr:'£38k',days:21,st:'crit',subs:1620,h:38,note:'At risk — usage declining',ai:'Usage dropped 28% since Oct. Suggest ROI workshop before renewal. Identify new champion in HR.'},
+  {n:'Deloitte UK',mrr:'£55k',days:44,st:'risk',subs:2400,h:52,note:'Key contact on parental leave',ai:'New HR Director James Park started 3 weeks ago. Recommend introductory call before renewal process begins.'},
+  {n:'Accenture UK',mrr:'£61k',days:51,st:'risk',subs:2710,h:58,note:'Upsell opportunity present',ai:'Headcount grew 8% in London. Recommend adding 200 seats at renewal. Draft proposal ready.'},
+  {n:'Amazon UK',mrr:'£47k',days:63,st:'ok',subs:2100,h:76,note:'Strong engagement',ai:'Highly engaged. Consider proposing multi-year renewal. Glasgow expansion flagged as seat opportunity.'},
+  {n:'Lloyds Banking',mrr:'£33k',days:71,st:'ok',subs:1450,h:72,note:'Renewal on track',ai:'Stable health. Good candidate for Mindfulness tier cross-sell.'},
+  {n:'BT Group',mrr:'£28k',days:88,st:'ok',subs:1200,h:69,note:'Standard renewal',ai:'Usage stable. No expansion signals. Standard renewal process recommended.'},
+];
+var smbExcD=[
+  {n:'PulseWell',iss:'Negative ROI data — needs review before sending',mrr:'£1.8k'},
+  {n:'TechStart Co',iss:'Client responded requesting a call — auto-outreach paused',mrr:'£890'},
+  {n:'GreenPath HR',iss:'Contract length exception — needs approval',mrr:'£2.1k'},
+  {n:'NovaRecruit',iss:'Upsell value £4.2k — above £3k auto-threshold',mrr:'£1.1k'},
+];
+var sigD=[
+  {n:'HSBC',t:'headcount',ic:'ti-users',bg:'#E1F5EE',ic2:'#0F6E56',sig:'Hired 120 roles in Canary Wharf in 90 days',src:'Clay + LinkedIn',val:'£18k',ai:'Recommend adding 120 seats at renewal. Draft email to Sarah Chen ready for your review.'},
+  {n:'Deloitte UK',t:'news',ic:'ti-news',bg:'#E6F1FB',ic2:'#185FA5',sig:'Announced company-wide wellbeing programme for 2025',src:'Company news',val:'£24k',ai:'Strong Premium-tier alignment. Suggest presenting ROI case to CPO this quarter.'},
+  {n:'Amazon UK',t:'news',ic:'ti-building',bg:'#E6F1FB',ic2:'#185FA5',sig:'New Glasgow office opening Q3 with 400+ headcount',src:'Clay + Press',val:'£31k',ai:'Expansion opportunity: 400 new eligible employees. Contact ops lead for Glasgow before Q3.'},
+  {n:'Accenture UK',t:'headcount',ic:'ti-users',bg:'#E1F5EE',ic2:'#0F6E56',sig:'London headcount grew 8% last quarter',src:'LinkedIn Sales Nav',val:'£14k',ai:'Current contract underweights London employees. Flag at renewal with updated seat count.'},
+  {n:'Lloyds Banking',t:'health',ic:'ti-heart',bg:'#EAF3DE',ic2:'#3B6D11',sig:'NPS 9.2 · Usage 94% · 3 green QBRs in a row',src:'Salesforce + Gong',val:'£22k',ai:'High-trust account. Ideal for multi-year deal or Mindfulness cross-sell. Approach now.'},
+  {n:'Vodafone Enterprise',t:'stakeholder',ic:'ti-user-plus',bg:'#FAEEDA',ic2:'#854F0B',sig:'New Chief People Officer started 2 weeks ago',src:'LinkedIn Sales Nav',val:'£19k',ai:'New CPO Sarah Obi previously championed our product at BT. High-value warm intro opportunity.'},
+  {n:'BP UK',t:'news',ic:'ti-news',bg:'#E6F1FB',ic2:'#185FA5',sig:'Mental health at work strategy published externally',src:'Company news',val:'£16k',ai:'Published strategy aligns with our Mental Wellbeing tier. Reach out with relevant case study.'},
+  {n:'GSK',t:'health',ic:'ti-trending-up',bg:'#EAF3DE',ic2:'#3B6D11',sig:'Usage +34% since new benefits lead joined in Jan',src:'Looker + Gong',val:'£28k',ai:'Strong momentum. Recommend QBR-led upsell. Cross-sell Nutrition tier.'},
+  {n:'NatWest Group',t:'stakeholder',ic:'ti-user-plus',bg:'#FAEEDA',ic2:'#854F0B',sig:'3 senior HR contacts changed roles this month',src:'LinkedIn Sales Nav',val:'£11k',ai:'Account may be single-threaded. Prioritise stakeholder mapping to protect renewal.'},
+];
+var smbSigD=[
+  {n:'Monzo',t:'headcount',sig:'Hired 80 roles in 60 days',val:'£8.4k',st:'Outreach sent by agent'},
+  {n:'Bulb Energy',t:'news',sig:'Birmingham expansion announced',val:'£5.1k',st:'Outreach sent by agent'},
+  {n:'Zopa Bank',t:'health',sig:'Usage 96% · NPS 9.1',val:'£12k',st:'Escalated — above threshold'},
+  {n:'OakNorth',t:'stakeholder',sig:'New HR Director started',val:'£6.2k',st:'Draft ready for your review'},
+  {n:'Pret A Manger',t:'news',sig:'100 new stores announced',val:'£14k',st:'Escalated — high value'},
+  {n:'Wise',t:'headcount',sig:'Dublin headcount +60%',val:'£9.8k',st:'Outreach sent by agent'},
+  {n:'Starling Bank',t:'health',sig:'Top-decile engagement 4 months running',val:'£11k',st:'Draft ready for your review'},
+  {n:'Butternut Box',t:'news',sig:'Series D funding announced',val:'£4.3k',st:'Outreach sent by agent'},
+];
+
+function sc(s){return s<40?'#E24B4A':s<60?'#EF9F27':'#639922'}
+function show(id,v){var e=document.getElementById(id);if(e)e.style.display=v?'':'none'}
+
+function seg(s,el){
+  S=s;
+  document.querySelectorAll('.seg-btn').forEach(function(b){b.classList.remove('on')});
+  el.classList.add('on');
+  var e=s==='ent';
+  show('ent-home-m',e);show('smb-home-m',!e);
+  show('ent-home-body',e);show('smb-home-body',!e);
+  show('ent-renewal-body',e);show('smb-renewal-body',!e);
+  show('ent-upsell-body',e);show('smb-upsell-body',!e);
+}
+function tab(t,i){
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on')});
+  document.getElementById('t-'+t).classList.add('on');
+  document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('on')});
+  document.getElementById('nb'+i).classList.add('on');
+}
+
+function mkChurn(){
+  var el=document.getElementById('churn-rows');if(!el)return;
+  el.innerHTML=churnD.map(function(a){
+    return '<div class="row"><div style="flex:1"><div class="rname">'+a.n+'</div><div class="rsub">'+a.why+'</div></div>'
+    +'<div style="text-align:right;flex-shrink:0"><div style="font-size:11px;font-weight:600;color:'+sc(a.score)+'">Score: '+a.score+'</div>'
+    +'<div style="font-size:10px;color:#888">'+a.days+'d to renewal</div></div></div>';
+  }).join('');
+}
+function mkUpsellHome(){
+  var el=document.getElementById('upsell-home-rows');if(!el)return;
+  el.innerHTML=upsellHomeD.map(function(u){
+    return '<div class="row"><div style="flex:1"><div class="rname">'+u.n+'</div><div class="rsub">'+u.sig+'</div></div>'
+    +'<div style="font-size:12px;font-weight:600;color:#0F6E56;flex-shrink:0">+'+u.val+'</div></div>';
+  }).join('');
+}
+function mkSmbActions(){
+  var el=document.getElementById('smb-action-rows');if(!el)return;
+  el.innerHTML=smbActD.map(function(a){
+    return '<div class="row"><i class="ti '+a.ic+'" style="font-size:15px;color:#1D9E75;width:18px;flex-shrink:0"></i>'
+    +'<div style="flex:1;font-size:12px;color:#1a1a1a">'+a.a+'</div>'
+    +'<span class="badge b-tel">'+a.c+' accounts</span></div>';
+  }).join('');
+}
+function mkSmbEsc(){
+  var el=document.getElementById('smb-esc-rows');if(!el)return;
+  el.innerHTML=smbEscD.map(function(e){
+    return '<div class="row"><div style="flex:1"><div class="rname">'+e.n+' <span style="font-size:10px;color:#888;font-weight:400">'+e.mrr+'</span></div>'
+    +'<div class="rsub">'+e.iss+'</div></div></div>';
+  }).join('');
+}
+function rfilt(f,el){RF=f;document.querySelectorAll('#rf .chip').forEach(function(c){c.classList.remove('on')});el.classList.add('on');mkRenewal()}
+function mkRenewal(){
+  var el=document.getElementById('renewal-cards');if(!el)return;
+  var d=RF==='all'?renewD:renewD.filter(function(r){return r.st===RF});
+  el.innerHTML=d.map(function(r,i){
+    var bd=r.st==='crit'?'b-red':r.st==='risk'?'b-amb':'b-grn';
+    var bt=r.st==='crit'?'Critical':r.st==='risk'?'At risk':'On track';
+    var p=Math.round(r.h);
+    return '<div class="rcard '+r.st+'" onclick="drw(\'dr'+i+'\')">'
+    +'<div class="rt"><span class="rn">'+r.n+'</span><span class="badge '+bd+'">'+bt+'</span></div>'
+    +'<div class="rm">'
+    +'<span><i class="ti ti-calendar"></i>'+r.days+'d to renewal</span>'
+    +'<span><i class="ti ti-coin"></i>'+r.mrr+' MRR</span>'
+    +'<span><i class="ti ti-users"></i>'+r.subs.toLocaleString()+' subs</span>'
+    +'<span>Health: <span style="color:'+sc(r.h)+'">'+p+'</span>'
+    +'<span class="sbar" style="margin-left:4px"><span class="sfill" style="width:'+p+'%;background:'+sc(r.h)+'"></span></span></span>'
+    +'</div>'
+    +'<div class="drawer" id="dr'+i+'">'
+    +'<div class="dl">CSM notes</div><div class="dv">'+r.note+'</div>'
+    +'<div class="aibox"><div class="ailbl"><i class="ti ti-sparkles"></i>AI suggestion &mdash; for your review only</div>'+r.ai+'</div>'
+    +'<div class="dbts">'
+    +'<button class="ab" onclick="event.stopPropagation()">Draft email</button>'
+    +'<button class="ab" onclick="event.stopPropagation()">Stakeholder map</button>'
+    +'<button class="ab" onclick="event.stopPropagation()">Generate QBR</button>'
+    +'</div></div></div>';
+  }).join('');
+}
+function mkSmbExc(){
+  var el=document.getElementById('smb-exc-rows');if(!el)return;
+  el.innerHTML=smbExcD.map(function(e){
+    return '<div class="row"><div style="flex:1"><div class="rname">'+e.n+' <span style="font-size:10px;color:#888;font-weight:400">'+e.mrr+'</span></div>'
+    +'<div class="rsub">'+e.iss+'</div></div></div>';
+  }).join('');
+}
+var typeLbl={headcount:'Headcount',news:'Company news',health:'Internal signal',stakeholder:'Stakeholder change'};
+var typeBadge={headcount:'b-tel',news:'b-blu',health:'b-grn',stakeholder:'b-amb'};
+function sfilt(f,el){SF=f;document.querySelectorAll('#sf .chip').forEach(function(c){c.classList.remove('on')});el.classList.add('on');mkSignals()}
+function mkSignals(){
+  var el=document.getElementById('signal-cards');if(!el)return;
+  var d=SF==='all'?sigD:sigD.filter(function(s){return s.t===SF});
+  el.innerHTML=d.map(function(s){
+    return '<div class="scrd">'
+    +'<div style="display:flex;align-items:flex-start;gap:10px">'
+    +'<div class="sicon" style="background:'+s.bg+'"><i class="ti '+s.ic+'" style="color:'+s.ic2+'"></i></div>'
+    +'<div style="flex:1;min-width:0">'
+    +'<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px">'
+    +'<span style="font-size:13px;font-weight:600;color:#1a1a1a">'+s.n+'</span>'
+    +'<span class="badge '+typeBadge[s.t]+'">'+typeLbl[s.t]+'</span>'
+    +'<span style="font-size:10px;color:#888;margin-left:auto">'+s.src+'</span>'
+    +'</div>'
+    +'<div style="font-size:12px;color:#666;margin-bottom:8px">'+s.sig+'</div>'
+    +'<div class="aibox"><div class="ailbl"><i class="ti ti-sparkles"></i>AI recommendation &mdash; for your review only</div>'+s.ai+'</div>'
+    +'<div style="display:flex;align-items:center;gap:8px;margin-top:9px">'
+    +'<span style="font-size:12px;font-weight:600;color:#0F6E56">Est. opp: +'+s.val+'</span>'
+    +'<button class="ab" style="margin-left:auto">Draft outreach</button>'
+    +'<button class="ab">Full brief</button>'
+    +'</div></div></div></div>';
+  }).join('');
+}
+function mkSmbSig(){
+  var el=document.getElementById('smb-sig-rows');if(!el)return;
+  var esc=['Escalated','review'];
+  el.innerHTML=smbSigD.map(function(s){
+    var isE=esc.some(function(k){return s.st.indexOf(k)>-1});
+    return '<div class="row"><div style="flex:1">'
+    +'<div class="rname">'+s.n+' <span class="badge '+typeBadge[s.t]+'" style="margin-left:4px">'+typeLbl[s.t]+'</span></div>'
+    +'<div class="rsub">'+s.sig+'</div>'
+    +'<div style="font-size:10px;margin-top:3px;color:'+(isE?'#854F0B':'#0F6E56')+'">'+s.st+'</div>'
+    +'</div>'
+    +'<div style="text-align:right;flex-shrink:0">'
+    +'<div style="font-size:12px;font-weight:600;color:#0F6E56">+'+s.val+'</div>'
+    +(isE?'<button class="ab" style="margin-top:4px;font-size:10px">Review</button>':'')
+    +'</div></div>';
+  }).join('');
+}
+function drw(id){var d=document.getElementById(id);if(d)d.classList.toggle('open')}
+
+function initChart(){
+  var c=document.getElementById('pipeChart');
+  if(!c||!window.Chart)return;
+  new Chart(c,{type:'bar',
+    data:{labels:['May','June','July'],datasets:[
+      {label:'On track',data:[180,290,280],backgroundColor:'#1D9E75',borderRadius:3},
+      {label:'At risk',data:[95,180,90],backgroundColor:'#EF9F27',borderRadius:3},
+      {label:'Critical',data:[45,110,40],backgroundColor:'#E24B4A',borderRadius:3},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.dataset.label+': £'+c.raw+'k'}}}},
+      scales:{
+        x:{stacked:true,grid:{display:false},ticks:{font:{size:11},color:'#888'}},
+        y:{stacked:true,ticks:{callback:function(v){return '£'+v+'k'},font:{size:11},color:'#888'},grid:{color:'rgba(0,0,0,0.05)'}}
+      }
+    }
+  });
+}
+
+mkChurn();mkUpsellHome();mkSmbActions();mkSmbEsc();mkRenewal();mkSmbExc();mkSignals();mkSmbSig();
+setTimeout(initChart,100);
+</script>
+</body>
+</html>
